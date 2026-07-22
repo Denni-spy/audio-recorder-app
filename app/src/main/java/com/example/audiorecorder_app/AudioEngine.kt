@@ -38,15 +38,11 @@ class AudioRecorderManager(private val context: Context) {
     }
 
     fun pauseRecording() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mediaRecorder?.pause()
-        }
+        mediaRecorder?.pause()
     }
 
     fun resumeRecording() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mediaRecorder?.resume()
-        }
+        mediaRecorder?.resume()
     }
 
     fun stopRecording(): File? {
