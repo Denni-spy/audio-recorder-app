@@ -42,6 +42,7 @@ fun AudioRecorderScreen(viewModel: AudioViewModel = viewModel()) {
     val recordings by viewModel.recordings
     val recordingState by viewModel.recordingState
     val playingFile by viewModel.playingFile
+    val playbackProgress by viewModel.playbackProgress
 
     var hasPermission by remember {
         mutableStateOf(
@@ -130,6 +131,7 @@ fun AudioRecorderScreen(viewModel: AudioViewModel = viewModel()) {
                     RecordingItem(
                         recording = recording,
                         isPlaying = playingFile == recording.file,
+                        progress = if (playingFile == recording.file) playbackProgress else 0f,
                         onPlay = { viewModel.playRecording(recording) },
                         onStop = { viewModel.stopPlayback() },
                         onDelete = { viewModel.deleteRecording(recording) },
