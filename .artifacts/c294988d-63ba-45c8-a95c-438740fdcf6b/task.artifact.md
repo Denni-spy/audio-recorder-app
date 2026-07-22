@@ -1,0 +1,16 @@
+- [x] Configuration & Setup
+    - [x] Add permissions to `AndroidManifest.xml`
+    - [x] Add `FileProvider` to `AndroidManifest.xml`
+    - [x] Create `res/xml/file_paths.xml`
+- [x] Core Logic & Plugin Wrappers
+    - [x] Implement `AudioRecorderManager` (Start, Pause, Resume, Stop)
+    - [x] Implement `AudioPlayerManager` (Play, Stop, Progress)
+    - [x] Implement `FilesystemPlugin` and `FilePickerPlugin` wrappers
+- [x] State Management
+    - [x] Implement `AudioViewModel` (Recording list, State tracking, File operations)
+- [x] UI Implementation
+    - [x] Create `RecordingItem` component
+    - [x] Implement `MainActivity` UI (List and Controls)
+- [x] Final Verification
+    - [x] Verify all requirements are met
+    - [x] Final build and test
