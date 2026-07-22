@@ -6,6 +6,9 @@ import android.net.Uri
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 
 enum class RecordingState { IDLE, RECORDING, PAUSED }
@@ -25,6 +28,9 @@ class AudioViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _playingFile = mutableStateOf<File?>(null)
     val playingFile: State<File?> = _playingFile
+
+    private val _playbackProgress = mutableStateOf(0f)
+    val playbackProgress: State<Float> = _playbackProgress
 
     init {
         loadRecordings()
@@ -54,16 +60,24 @@ class AudioViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun stopRecording() {
-        val file = recorderManager.stopRecording()
+        val tempFile = recorderManager.stopRecording()
         _recordingState.value = RecordingState.IDLE
-        if (file != null) {
-            // Requirement: Use copyFile and rename as suggested in tips (simulation)
-            val uri = FilesystemPlugin.getUri(context, file.absolutePath)
-            val tempPath = File(context.cacheDir, "temp_copy.mp3").absolutePath
-            FilePickerPlugin.copyFile(context, uri, tempPath)
+        
+        if (tempFile != null && tempFile.exists()) {
+            val recordingsDir = File(context.filesDir, "recordings")
+            if (!recordingsDir.exists()) recordingsDir.mkdirs()
+
+            val finalFile = File(recordingsDir, "temp_rec.mp3")
             
+            // 1. Get URI for temp file (Filesystem Plugin tip)
+            val uri = FilesystemPlugin.getUri(context, tempFile.absolutePath)
+            
+            // 2. Copy file to recordings dir (File Picker Plugin tip)
+            FilePickerPlugin.copyFile(context, uri, finalFile.absolutePath)
+            
+            // 3. Rename to final timestamped name (Filesystem Plugin tip)
             val finalName = "Recording_${System.currentTimeMillis()}.mp3"
-            FilesystemPlugin.rename(tempPath, finalName)
+            FilesystemPlugin.rename(finalFile.absolutePath, finalName)
             
             loadRecordings()
         }
@@ -71,8 +85,29 @@ class AudioViewModel(application: Application) : AndroidViewModel(application) {
 
     fun playRecording(recording: Recording) {
         _playingFile.value = recording.file
+        
+        var handle: Any? = null
+        handle = playerManager.setOnStopListener {
+            _playingFile.value = null
+            _playbackProgress.value = 0f
+            handle?.let { playerManager.removeStopListener(it) }
+        }
+        
         playerManager.play(recording.file.absolutePath) {
             _playingFile.value = null
+            _playbackProgress.value = 0f
+        }
+
+        // Ticker to query current position and duration (Tip requirement)
+        viewModelScope.launch {
+            while (_playingFile.value == recording.file) {
+                val pos = playerManager.getCurrentPosition()
+                val dur = playerManager.getDuration()
+                if (dur > 0) {
+                    _playbackProgress.value = pos.toFloat() / dur
+                }
+                delay(100)
+            }
         }
     }
 

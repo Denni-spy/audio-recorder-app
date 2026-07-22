@@ -11,11 +11,16 @@ class AudioRecorderManager(private val context: Context) {
     private var mediaRecorder: MediaRecorder? = null
     private var currentFile: File? = null
 
-    fun startRecording(): File? {
-        val recordingsDir = File(context.filesDir, "recordings")
-        if (!recordingsDir.exists()) recordingsDir.mkdirs()
+    init {
+        // Using license key as requested
+        Log.d("AudioRecorder", "Initializing with key: ${Licenses.AUDIO_RECORDER_KEY}")
+    }
 
-        currentFile = File(recordingsDir, "recording_${System.currentTimeMillis()}.mp3")
+    fun startRecording(): File? {
+        val tempFile = File(context.cacheDir, "raw_recording.mp3")
+        if (tempFile.exists()) tempFile.delete()
+        
+        currentFile = tempFile
         
         mediaRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             MediaRecorder(context)
@@ -59,6 +64,11 @@ class AudioRecorderManager(private val context: Context) {
 class AudioPlayerManager {
     private var mediaPlayer: MediaPlayer? = null
     private var onStopListener: (() -> Unit)? = null
+
+    init {
+        // Using license key as requested
+        Log.d("AudioPlayer", "Initializing with key: ${Licenses.AUDIO_PLAYER_KEY}")
+    }
 
     fun play(path: String, onComplete: () -> Unit) {
         stop()

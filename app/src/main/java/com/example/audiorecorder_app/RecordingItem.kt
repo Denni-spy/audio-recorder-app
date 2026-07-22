@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 fun RecordingItem(
     recording: Recording,
     isPlaying: Boolean,
+    progress: Float,
     onPlay: () -> Unit,
     onStop: () -> Unit,
     onDelete: () -> Unit,
@@ -35,6 +36,13 @@ fun RecordingItem(
                     text = recording.name,
                     style = MaterialTheme.typography.bodyLarge
                 )
+                if (isPlaying) {
+                    LinearProgressIndicator(
+                        progress = { progress },
+                        modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
             
             IconButton(onClick = if (isPlaying) onStop else onPlay) {
