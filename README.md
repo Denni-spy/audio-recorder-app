@@ -13,6 +13,17 @@ Fallstudie im Modul *Hybride App-Entwicklung*. Hybride Android-App auf Basis von
 | `@capacitor/filesystem` | `getUri(...)`, `rename(...)`, Auflisten und Löschen der Dateien |
 | `@capacitor/share` | Teilen einer Aufnahme über den System-Dialog |
 
+## Fertige App zum Installieren
+
+Unter [`apk/AudioRecorder-debug.apk`](apk/AudioRecorder-debug.apk) liegt ein installierbares
+Debug-Build. Es ist ohne Einrichtung der Entwicklungsumgebung auf jedem Android-Gerät
+lauffähig — hilfreich, weil sich das Projekt ohne gültigen Lizenzschlüssel für die beiden
+Audio-Plugins nicht selbst bauen lässt (siehe Einrichtung).
+
+Beim Installieren meldet Android, dass die App nicht aus dem Play Store stammt; die
+Installation muss einmalig zugelassen werden. Beim ersten Start fragt die App die
+Mikrofon-Berechtigung an.
+
 ## Voraussetzungen
 
 * Node.js 20+ und npm

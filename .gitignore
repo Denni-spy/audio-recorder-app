@@ -20,6 +20,7 @@ Thumbs.db
 npm-debug.log*
 yarn-error.log*
 
-# Gebaute App-Pakete
+# Gebaute App-Pakete - Ausnahme: die Abgabe-APK unter apk/
 *.apk
 *.aab
+!apk/AudioRecorder-debug.apk
