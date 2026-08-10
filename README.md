@@ -16,22 +16,18 @@ Fallstudie im Modul *Hybride App-Entwicklung*. Hybride Android-App auf Basis von
 ## Voraussetzungen
 
 * Node.js 20+ und npm
-* Android Studio mit Android SDK und **JDK 21**
+* Android Studio mit Android SDK
 
-### Warum genau JDK 21?
+### Zur Build-JDK
 
-Capacitor 8 kompiliert gegen Java 21 und liefert Gradle 8.14.3 mit. Beide Grenzen müssen
-eingehalten werden:
+Die benötigte JDK muss **nicht** manuell installiert werden. Das Projekt legt die Version
+über `android/gradle/gradle-daemon-jvm.properties` fest (Adoptium 21); Gradle lädt sie beim
+ersten Build automatisch nach.
 
-| JDK | Ergebnis |
-| --- | --- |
-| 17 | `error: invalid source release: 21` |
-| 21 | funktioniert |
-| 25 (in Android Studio gebündelte JBR) | `Unsupported class file major version 69` beim Gradle-Sync |
-
-In Android Studio deshalb unter *Settings → Build, Execution, Deployment → Build Tools →
-Gradle → Gradle JDK* ein JDK 21 auswählen (bei Bedarf über „Download JDK…" beziehen).
-Auf der Kommandozeile entsprechend `JAVA_HOME` auf ein JDK 21 setzen.
+Hintergrund: Capacitor 8 kompiliert gegen Java 21. Mit JDK 17 bricht der Build mit
+`invalid source release: 21` ab, mit der in Android Studio gebündelten JDK 25 scheiterte
+zuvor der Gradle-Sync an `Unsupported class file major version 69`. Die feste Vorgabe
+über die Daemon-JVM-Kriterien schließt beide Fälle aus.
 * Ein **physisches Android-Gerät mit Mikrofon** (der Emulator eignet sich nur eingeschränkt)
 * Eine gültige **Capawesome-Insiders-Lizenz** für die beiden Audio-Plugins
 
