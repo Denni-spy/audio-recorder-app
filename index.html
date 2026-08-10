@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Audio Recorder</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header class="app-bar">
+      <h1>Audio Recorder</h1>
+    </header>
+
+    <main class="content">
+      <section id="permission-hint" class="notice" hidden>
+        <p>Die App benötigt Zugriff auf das Mikrofon, um Aufnahmen zu erstellen.</p>
+        <button id="permission-button" class="button">Berechtigung erteilen</button>
+      </section>
+
+      <section id="recorder-panel" class="panel" hidden>
+        <div class="panel-info">
+          <span id="recorder-status" class="panel-status">Aufnahme läuft</span>
+          <span id="recorder-timer" class="panel-timer">00:00</span>
+        </div>
+        <div class="panel-actions">
+          <button id="pause-button" class="button button-secondary">Pause</button>
+          <button id="stop-button" class="button">Stopp</button>
+        </div>
+      </section>
+
+      <h2 class="section-title">Meine Aufnahmen</h2>
+      <p id="empty-hint" class="empty-hint" hidden>Noch keine Aufnahmen vorhanden.</p>
+      <ul id="recording-list" class="recording-list"></ul>
+    </main>
+
+    <button id="record-button" class="fab" aria-label="Neue Aufnahme starten">
+      <span class="fab-dot"></span>
+    </button>
+
+    <div id="toast" class="toast" hidden></div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

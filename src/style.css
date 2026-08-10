@@ -1,0 +1,264 @@
+:root {
+  --color-bg: #f4f5f7;
+  --color-surface: #ffffff;
+  --color-text: #1b1c1e;
+  --color-text-muted: #61646b;
+  --color-primary: #2f5bd7;
+  --color-danger: #c62f38;
+  --color-border: #e0e2e7;
+  --radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Muss nach den Klassen mit eigenem display-Wert greifen (.panel, .fab). */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.app-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: calc(env(safe-area-inset-top) + 14px) 16px 14px;
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.app-bar h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.content {
+  padding: 16px 16px calc(env(safe-area-inset-bottom) + 96px);
+}
+
+.section-title {
+  margin: 24px 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.notice,
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.notice p {
+  margin: 0 0 12px;
+}
+
+.panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.panel-status {
+  font-weight: 600;
+}
+
+.panel-status.is-paused {
+  color: var(--color-text-muted);
+}
+
+.panel-timer {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+}
+
+.panel-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.button:active {
+  opacity: 0.85;
+}
+
+.button-secondary {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.empty-hint {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.recording-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.recording {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+}
+
+.recording-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.recording-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.icon-button {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.icon-button.is-danger {
+  color: var(--color-danger);
+}
+
+.icon-button:active {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.progress {
+  margin-top: 10px;
+}
+
+.progress-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: var(--color-primary);
+  transition: width 0.2s linear;
+}
+
+.progress-time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-muted);
+}
+
+.fab {
+  position: fixed;
+  right: 20px;
+  bottom: calc(env(safe-area-inset-bottom) + 20px);
+  width: 64px;
+  height: 64px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-danger);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fab[disabled] {
+  opacity: 0.5;
+}
+
+.fab-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.toast {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(env(safe-area-inset-bottom) + 96px);
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #1b1c1e;
+  color: #fff;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121316;
+    --color-surface: #1e2024;
+    --color-text: #f2f3f5;
+    --color-text-muted: #a0a4ad;
+    --color-border: #2f323a;
+    --color-primary: #7ba1ff;
+    --color-danger: #ff6b6b;
+  }
+
+  .app-bar {
+    background: #1e2024;
+  }
+
+  .button {
+    color: #10131a;
+  }
+
+  .toast {
+    background: #f2f3f5;
+    color: #1b1c1e;
+  }
+}
